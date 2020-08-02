@@ -123,4 +123,57 @@ function beginSearch() {
         beginSearch();
       })
     }
-         
+    function addDepartment(){
+        var query = "INSERT INTO department (name) VALUES (?)"
+      
+        inquirer
+          .prompt([{
+            name: "department",
+            type: "input",
+            message: "What is the new department name?"
+          }]).then(function(res){
+            const departName = [res.department]
+      
+            conn.query(query, departName, function(err,qres){
+              if (err) throw err;
+              console.log("Department has been created.");
+              beginSearch();
+            })
+          })
+      }
+      
+    function addEmployee(){
+        var query = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?, ?, ?, ?)"
+      
+        inquirer
+        .prompt([{
+          name: "firstName",
+          type: "input",
+          message: "What is the employee's first name?"
+        },
+        {
+          name: "lastName",
+          type: "input",
+          message: "What is the employee's last name?"
+        },
+        {
+          name: "role",
+          type: "input",
+          message:"What is the role ID?"
+        },
+        {
+          name: "manager",
+          type: "input",
+          message:"What is the manager ID?"
+        }])
+        .then(function(res){
+          var employee = [res.firstName, res.lastName, res.role, res.manager];
+      
+          conn.query(query, employee, function(err, qres){
+            if (err) throw err;
+            console.log("Added new employee");
+            beginSearch();
+            })
+        })
+      }
+               
