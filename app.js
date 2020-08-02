@@ -77,4 +77,50 @@ function beginSearch() {
           //calls function to add a new employee
           addEmployee();
           break;
-     
+          case "Add role":
+            //calls function to add a new role
+            addRole();
+            break;
+    
+          case "Update employee's role":
+            //calls function to update an existing employee's role
+            updateRole();
+            break;
+    
+          //closes the application
+          case "Exit Application":
+            console.log("Thank you.  Please come again.");
+            process.exit(1);        
+          }
+    
+        });
+    }
+    
+    function viewAllEmployees(){
+      var query = "SELECT * FROM employee";
+    
+      conn.query(query, function (err, res) {
+        if (err) throw err;
+        console.table(res);
+        beginSearch();
+      })
+    }
+    
+    function viewAllDepartments(){
+      var query = "SELECT * FROM department";
+      conn.query(query, function (err, res) {
+        if (err) throw err;
+        console.table(res);
+        beginSearch();
+      })
+    }
+    
+    function viewAllRoles(){
+      var query = "SELECT * FROM roles";
+      conn.query(query, function (err, res) {
+        if (err) throw err;
+        console.table(res);
+        beginSearch();
+      })
+    }
+         
