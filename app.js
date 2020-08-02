@@ -176,4 +176,59 @@ function beginSearch() {
             })
         })
       }
-               
+      function addRole(){
+        var query = "INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)"
+        inquirer
+        .prompt([
+        {
+          name: "title",
+          type: "input",
+          message: "What is the new role?"
+        },
+        {
+          name: "salary",
+          type: "input",
+          message: "What is the new salary for that role?"
+        },
+        {
+          name: "departID",
+          type: "input",
+          message:"What is the department ID for the new role?"
+        }])
+        .then(function(res){
+          var role = [res.title, res.salary, res.departID];
+      
+          conn.query(query, role, function(err, qres){
+            if (err) throw err;
+            console.log("Added new role");
+            beginSearch();
+            })
+        })
+      }
+      
+      function updateRole(){
+      
+        inquirer
+        .prompt([{
+            name: "employee",
+            type: "input",
+            message:"What is the employee's ID?"
+          },
+          {
+            name: "role",
+            type: "input",
+            message:"What is the employee's new role ID?"
+          }])
+          .then(function(res){
+            var sql = "UPDATE employee SET role_id = " + res.role + " WHERE id = " + res.employee;
+            conn.query(sql, function (err, qres) {
+              if (err) throw err;
+              console.log("Employee role updated successfully.")
+              beginSearch();
+            });
+          });
+      }
+      
+      clearConsoleAndScrollbackBuffer();
+      showApHeader();
+      beginSearch();          
